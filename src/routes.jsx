@@ -4,8 +4,9 @@ import { createBrowserRouter } from "react-router-dom";
 import General from "./layouts/General";
 
 // Pages
-import MemoryLane from "./pages/MemoryLane";
 import Home from "./pages/Home";
+import MemoryLane from "./pages/MemoryLane";
+import Memory from "./components/Memory";
 
 const routes = [
   {
@@ -20,8 +21,13 @@ const routes = [
       },
       {
         path: "/memory-lane",
-        name: "Login",
+        name: "Memory Lane",
         element: <MemoryLane />,
+      },
+      {
+        path: "/memory/:id",
+        name: "Memory",
+        element: <Memory />,
       },
     ],
   }
