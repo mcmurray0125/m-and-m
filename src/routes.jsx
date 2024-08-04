@@ -6,7 +6,7 @@ import General from "./layouts/General";
 // Pages
 import Home from "./pages/Home";
 import MemoryLane from "./pages/MemoryLane";
-import Memory from "./components/Memory";
+import Memory from "./pages/Memory";
 
 const routes = [
   {
