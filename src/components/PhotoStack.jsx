@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import getImagePositions from '../utilities/getImagePositions';
 import "../styles/photostack.css"
 
-export default function PhotoStack ( { memory, viewMode } ) {
+export default function PhotoStack ( { stackView, memory } ) {
   const [imagesResolved, setImagesResolved] = useState(0);
 
-  function handleImageLoad(e) {
+  function handleImageLoad() {
     setImagesResolved(previous => previous + 1);
   }
 
@@ -17,7 +17,7 @@ export default function PhotoStack ( { memory, viewMode } ) {
   }, [imagesResolved])
 
   return (
-    <div className={`photostack ${viewMode ? 'stack' : ''}`}>
+    <div className='photostack'>
         {memory.images.map((image, index) => {
             return (
             <img src={image}

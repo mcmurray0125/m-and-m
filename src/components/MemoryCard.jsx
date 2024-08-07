@@ -1,5 +1,4 @@
 import React from 'react'
-import "../styles/memory-card.css"
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 

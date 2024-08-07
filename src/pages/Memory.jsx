@@ -16,7 +16,6 @@ export default function Memory() {
 
   function toggleStack () {
     setStackView(!stackView);
-    console.log('Stack Mode: ' + stackView);
   }
 
   useEffect(() => {
@@ -26,7 +25,7 @@ export default function Memory() {
   }, [memoryId]);
 
   return (
-    <Container>
+    <Container className={`mt-4 ${stackView && 'stack'}`}>
       {!loading && 
         <>
           <div className='d-flex justify-content-between align-items-center'>
@@ -35,7 +34,7 @@ export default function Memory() {
           </div>
           <p>{memory.description}</p>
           <Button className='mb-3' style={{zIndex: '20', position: 'relative'}} onClick={toggleStack}>Toggle View</Button>
-          <PhotoStack loading={loading} memory={memory} viewMode={stackView}/>
+          <PhotoStack loading={loading} memory={memory} stackView={stackView}/>
         </>
       }
     </Container>
