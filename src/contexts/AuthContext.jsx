@@ -19,7 +19,6 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
-    const [hasFolder, setHasFolder] = useState(false)
 
     function signup(email, password) {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -59,40 +58,6 @@ export function AuthProvider({ children }) {
     
          return unsubscribe
        }, [])
-
-       //Check is user has a database folder. If not, creates one with their UID
-      useEffect(() => {
-       if(currentUser && !loading) {
-         const checkFolder = async () => {
-           const docRef = doc(db, "users", currentUser.uid);
-           const docSnap = await getDoc(docRef);
-           if (docSnap.exists()) {
-             setHasFolder(true);
-           } else {
-            if (currentUser.email) {
-              try {
-                await setDoc(doc(db, "users", currentUser.uid), {
-                    saved: [],
-                    comments: []
-                  })
-            } catch(error) {
-                console.log(error)
-            }
-            } else {
-              try {
-                await setDoc(doc(db, "users", currentUser.uid), {
-                    saved: [],
-                    comments: []
-                  })
-            } catch(error) {
-                console.log(error)
-            }
-            }
-           }
-         };
-         checkFolder();
-       }
-      }, [currentUser]);
       
     const value = { 
         loading,
@@ -103,8 +68,7 @@ export function AuthProvider({ children }) {
         logout,
         resetPassword,
         emailChange,
-        passwordChange,
-        hasFolder
+        passwordChange
     }
 
   return (
