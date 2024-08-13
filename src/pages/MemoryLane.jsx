@@ -15,7 +15,7 @@ export default function MemoryLane() {
         <Row gap={2} xs={2} sm={2} md={4}>
           {memories.map((memory, index) => {
               return (
-                <Col key={index}>
+                <Col xs={12} sm={6} md={6} lg={6} xl={6} key={index}>
                   <MemoryCard memory={memory} />
                 </Col>
               )

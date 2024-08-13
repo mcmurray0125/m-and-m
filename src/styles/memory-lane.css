@@ -1,3 +1,18 @@
 .memory-card {
-    max-width: 600px;
+  max-width: 600px;
+}
+
+.memory-card .card-img-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.memory-card .card-title {
+  text-align: center;
+  width: 100%;
+  backdrop-filter: blur(2px);
+  font-size: 3rem;
+  margin: 0;
 }
