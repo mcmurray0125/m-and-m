@@ -32,9 +32,9 @@ export default function Memory() {
             <h2>{memory.title}</h2>
             <span>{memory.date}</span>
           </div>
-          <p>{memory.description}</p>
           <Button className='mb-3' style={{zIndex: '20', position: 'relative'}} onClick={toggleStack}>Toggle View</Button>
           <PhotoStack loading={loading} memory={memory} stackView={stackView}/>
+          <p>{memory.description}</p>
         </>
       }
     </Container>

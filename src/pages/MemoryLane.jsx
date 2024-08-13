@@ -12,7 +12,7 @@ export default function MemoryLane() {
           <h1>Memory Lane</h1>
           <Button>Make a Memory</Button>
         </div>
-        <Row gap={2} xs={2} sm={2} md={4}>
+        <Row className='row-gap-2' xs={2} sm={2} md={4}>
           {memories.map((memory, index) => {
               return (
                 <Col xs={12} sm={6} md={6} lg={6} xl={6} key={index}>

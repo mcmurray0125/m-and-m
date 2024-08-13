@@ -51,7 +51,7 @@ function getImagePositions(images) {
   function translateImages() {
     images.forEach((image, index) => {
       image.style.transform = `translate(${(image.getAttribute('center-x') - containerCenter.x) * -1 }px, ${(image.getAttribute('center-y') - stackedViewCenter) * -1}px)`
-      image.style.rotate = `${Math.floor(Math.random() * (6 - -6 + 1)) - 6}deg`;
+      image.style.rotate = `${Math.floor(Math.random() * (2.5 - -2.5 + 1)) - 2.5}deg`;
     });
   }
 

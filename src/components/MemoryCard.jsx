@@ -7,9 +7,11 @@ export default function MemoryCard ( {memory} ) {
     <Card className='memory-card'>
       <Link to={`/memory/${memory.id}`}>
         <Card.Img src={memory.coverPhoto}/>
-        <Card.ImgOverlay>
-          <Card.Title>{memory.title}</Card.Title>
-          <Card.Text>{memory.date}</Card.Text>
+        <Card.ImgOverlay className='p-0'>
+          <div className='ps-3 pb-3'>
+            <Card.Title>{memory.title}</Card.Title>
+            <Card.Text>{memory.date}</Card.Text>
+          </div>
         </Card.ImgOverlay>
       </Link>
     </Card>
