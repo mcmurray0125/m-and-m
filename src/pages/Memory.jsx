@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useLocation } from 'react-router'
+import { db } from '../firebase'
+import { collection, getDocs, query, where } from "firebase/firestore"
 
-import "../styles/memory-lane.css"
-import { Container, Col, Button } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 
-import { memories } from '../data/memories'
 import PhotoStack from '../components/PhotoStack'
+import "../styles/memory-lane.css"
 
-export default function Memory() {
-  const [memory, setMemory] = useState();
+export default function Memory(props) {
+  const [memory, setMemory] = useState({});
   const [loading, setLoading] = useState(true);
   const [stackView, setStackView] = useState(true);
+  const location = useLocation();
+  const data = location.state?.data; 
 
   const memoryId = useParams().id.toString();
 
@@ -19,10 +22,27 @@ export default function Memory() {
   }
 
   useEffect(() => {
-    setMemory(memories.find((memory) => memory.id === memoryId))
-    setLoading(false);
-    console.log(memory);
-  }, [memoryId]);
+    if (data) {
+      // data from router
+      setMemory(data);
+      setLoading(false);
+      console.log('Passed Data',data);
+    } else {
+      // data from database
+      async function fetchMemoryFromDatabase(memoryId) {
+        const q = query(collection(db, "memories"), where('__name__', "==", memoryId));
+        try {
+          const querySnapshot = await getDocs(q);
+          setMemory(querySnapshot.docs[0].data());
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          throw error;
+        }
+      }
+      fetchMemoryFromDatabase(memoryId);
+    }
+  }, [memoryId, data]);
 
   return (
     <Container className={`mt-4 ${stackView && 'stack'}`}>

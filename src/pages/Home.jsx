@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div>
       Home
-      <button >Add User</button>
+      <button onClick={sendToFirebase}>Add User</button>
     </div>
   )
 }

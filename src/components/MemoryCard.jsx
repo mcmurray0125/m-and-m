@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default function MemoryCard ( {memory} ) {
   return (
     <Card className='memory-card'>
-      <Link to={`/memory/${memory.id}`}>
+      <Link to={`/memory/${memory.id}`} state={{data: memory}} >
         <Card.Img src={memory.coverPhoto}/>
         <Card.ImgOverlay className='p-0'>
           <div className='ps-3 pb-3'>
