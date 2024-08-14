@@ -7,11 +7,11 @@ import { doc, collection, getDocs } from "firebase/firestore"
 
 // import { memories } from '../data/memories'
 import MemoryCard from '../components/MemoryCard'
-import NewMemory from '../components/NewMemory';
+import MultiPurposeModal from '../components/MultiPurposeModal';
 
 export default function MemoryLane() {
   const [loading, setLoading] = useState(true);
-  const [showNewMemory, setShowNewMemory] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [memories, setMemories] = useState([]);
   const { currentUser } = useAuth();
 
@@ -19,28 +19,30 @@ export default function MemoryLane() {
   useEffect(() => {
 
     const checkData = async () => {
-      if (currentUser) {
-        try {
-          let fetchedMemories = [];
-          const querySnapshot = await getDocs(collection(db, 'memories'));
-          querySnapshot.forEach((doc) => {
-            fetchedMemories.push(doc.data());
-          });
+      try {
+        let fetchedMemories = [];
+        const querySnapshot = await getDocs(collection(db, 'memories'));
+        querySnapshot.forEach((doc) => {
+          fetchedMemories.push(doc.data());
+        });
 
-          //const docSnap = await getDoc(docRef);
-          setMemories(fetchedMemories);
-          setLoading(false);
-        } catch(error) {
-          console.log(error)
-          setLoading(false);
-        }
+        //const docSnap = await getDoc(docRef);
+        setMemories(fetchedMemories);
+        setLoading(false);
+      } catch(error) {
+        console.log(error)
+        setLoading(false);
       }
     }
     checkData();
   }, [currentUser])
 
   function handleShow() {
-    setShowNewMemory(true);
+    setShowModal(true);
+  }
+
+  function handleClose() {
+    setShowModal(false);
   }
 
   return (
@@ -58,7 +60,7 @@ export default function MemoryLane() {
             )
         })}
       </Row>
-      <NewMemory show={showNewMemory} setShow={setShowNewMemory}/>
+      <MultiPurposeModal show={showModal} handleClose={handleClose} user={currentUser}/>
     </Container>
   )
 }

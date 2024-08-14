@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div>
       Home
-      <button onClick={sendToFirebase}>Add User</button>
+      <button >Add User</button>
     </div>
   )
 }
