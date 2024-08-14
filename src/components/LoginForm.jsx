@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useAuth } from '../contexts/AuthContext';
 import Spinner from './Spinner';
 
-function LoginForm( { handleClose } ) {
+function LoginForm( { handleClose, referrer } ) {
   const [loading, setLoading] = useState(false);
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -13,14 +13,17 @@ function LoginForm( { handleClose } ) {
 
   async function handleLogin(e) {
     e.preventDefault()
+    setLoading(true)
 
     try {
-      setError('')
-      setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
       setLoading(false)
+      if (referrer === 'Navigation') {
+        handleClose();
+      }
     } catch(error) {
       setLoading(false)
+      console.log(error)
     }
   }
 
@@ -30,26 +33,26 @@ function LoginForm( { handleClose } ) {
       <Modal.Header closeButton>
         <Modal.Title>Log in</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Form>
+      <Form onSubmit={handleLogin}>
+        <Modal.Body>
           <Form.Group className="mb-3" controlId="newMemory.Name">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Email" autoFocus required />
+            <Form.Control type="email" ref={emailRef} placeholder="Email" autoFocus required />
           </Form.Group>
           <Form.Group className="mb-3" controlId="newMemory.Images" >
             <Form.Label>Password</Form.Label>
-            <Form.Control type='password' placeholder="Password" required/>
+            <Form.Control type='password' ref={passwordRef} placeholder="Password" required/>
           </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="primary" type='submit' onSubmit={handleLogin}>
-          Log in
-        </Button>
-      </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" type='submit'>
+            Log in
+          </Button>
+        </Modal.Footer>
+      </Form>
     </>
   );
 }

@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import NewMemoryForm from './NewMemoryForm';
 import LoginForm from './LoginForm';
 
-function MultiPurposeModal( { show, handleClose, user } ) {
+function MultiPurposeModal( { show, handleClose, user, referrer } ) {
 
   return (
     <>
@@ -10,7 +10,7 @@ function MultiPurposeModal( { show, handleClose, user } ) {
         {user ?
           <NewMemoryForm handleClose={handleClose}/>
           :
-          <LoginForm handleClose={handleClose}/>
+          <LoginForm handleClose={handleClose} referrer={referrer}/>
         }
       </Modal>
     </>

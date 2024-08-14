@@ -60,7 +60,7 @@ export default function MemoryLane() {
             )
         })}
       </Row>
-      <MultiPurposeModal show={showModal} handleClose={handleClose} user={currentUser}/>
+      <MultiPurposeModal show={showModal} handleClose={handleClose} user={currentUser} referrer={'MemoryLane'}/>
     </Container>
   )
 }
