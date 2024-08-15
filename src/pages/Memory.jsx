@@ -8,7 +8,7 @@ import { Container, Button } from 'react-bootstrap'
 import PhotoStack from '../components/PhotoStack'
 import "../styles/memory-lane.css"
 
-export default function Memory(props) {
+export default function Memory() {
   const [memory, setMemory] = useState({});
   const [loading, setLoading] = useState(true);
   const [stackView, setStackView] = useState(true);
@@ -52,8 +52,14 @@ export default function Memory(props) {
             <h2>{memory.title}</h2>
             <span>{memory.date}</span>
           </div>
-          <Button className='mb-3' style={{zIndex: '20', position: 'relative'}} onClick={toggleStack}>Toggle View</Button>
-          <PhotoStack loading={loading} memory={memory} stackView={stackView}/>
+          {memory.images.length ?
+          <> 
+            <Button className='mb-3' style={{zIndex: '20', position: 'relative'}} onClick={toggleStack}>Toggle View</Button>
+            <PhotoStack loading={loading} memory={memory} stackView={stackView}/>
+          </>
+          :
+          <h2>No images</h2>
+          }
           <p>{memory.description}</p>
         </>
       }

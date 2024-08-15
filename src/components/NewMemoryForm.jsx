@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../firebase';
 import { doc, setDoc } from "firebase/firestore";
 import { uid } from 'uid';
@@ -59,11 +59,18 @@ function NewMemoryForm( { handleClose } ) {
               console.error("Upload failed", error);
               reject(error);
             },
-            () => {
-              resolve(); // Resolve the promise when upload is complete
+            async () => {
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+              memoryObject.images.push(downloadURL);
+              resolve();
             }
           );
         });
+      }
+
+      // Use uploaded image file as cover photo if no photo links provided in the form
+      if (!memoryObject.coverPhoto.length && memoryObject.images.length) {
+        memoryObject.coverPhoto = memoryObject.images[0];
       }
 
        // Write memory data to Firestore
