@@ -8,19 +8,21 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import Spinner from './Spinner';
 
 import { formatMemory } from '../forms/memoryFormatter';
 
 function NewMemoryForm( { handleClose } ) {
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState({current: 0, total: 0, progress: 0});
   const titleRef = useRef();
   const dateRef = useRef();
   const descriptionRef = useRef();
   const imagesRef = useRef();
   const [error, setError] = useState(null);
   const [images, setImages] = useState([]);
-  const [progress, setProgress] = useState(0);
+  let uploadCount = 0;
 
   const handleImageChange = (e) => {
     setImages([...e.target.files]);
@@ -47,12 +49,14 @@ function NewMemoryForm( { handleClose } ) {
         const imageStorageRef = ref(storage, `memory-${memoryObject.id}/${image.name + '-' + imageId}`);
         const uploadTask = uploadBytesResumable(imageStorageRef, image);
 
+        uploadCount++;
+
         await new Promise((resolve, reject) => {
           uploadTask.on(
             "state_changed",
             (snapshot) => {
               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              setProgress(progress);
+              setUploading({current: uploadCount, total: images.length, progress: progress})
               console.log(`Upload is ${progress}% done`);
             },
             (error) => {
@@ -83,6 +87,7 @@ function NewMemoryForm( { handleClose } ) {
       setError("Failed to save memory. Please try again.");
     } finally {
       setImages([]);
+      setUploading(false);
       setLoading(false); // Stop loading
     }
   };
@@ -90,6 +95,12 @@ function NewMemoryForm( { handleClose } ) {
   return (
     <>
       {loading && <Spinner/>}
+      {uploading.total && 
+      <div className='px-3 py-5 new-memory-progress'>
+        <p>Uploading {uploading.current}/{uploading.total}</p>
+        <ProgressBar now={uploading.progress} />
+      </div>
+      }
       <Modal.Header closeButton>
         <Modal.Title>New Memory</Modal.Title>
       </Modal.Header>
