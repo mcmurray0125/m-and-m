@@ -1,9 +1,9 @@
 import { uid } from "uid";
 
-export function formatMemory({ name, date, description, photos }) {
+export function formatMemory( title, date, description, photos ) {
     return {
-      name,
-      date: new Date(date).toISOString(), // Format the date as ISO string
+      title: title,
+      date: date,
       id: uid(16),
       description,
       photos: photos.filter(photo => photo.trim() !== ''), // Remove empty photo URLs,
