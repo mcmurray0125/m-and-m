@@ -95,7 +95,7 @@ function NewMemoryForm( { handleClose } ) {
   return (
     <>
       {loading && <Spinner/>}
-      {uploading.total && 
+      {uploading.total > 0 && 
       <div className='px-3 py-5 new-memory-progress'>
         <p>Uploading {uploading.current}/{uploading.total}</p>
         <ProgressBar now={uploading.progress} />
